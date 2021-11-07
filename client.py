@@ -24,13 +24,6 @@ class S7CommClient(Client):
 
             Client.__init__(self)
 
-            self.printDebugInfo(config)
-
-        def printDebugInfo(self,config):
-            print("Initialazing S7 COMM client")
-            print("Connect port :",config[PORT])
-            print("Connect address :",config[IP_ADDRESS])
-
 
         def start(self):
 

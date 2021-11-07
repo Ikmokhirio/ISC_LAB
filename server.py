@@ -28,16 +28,7 @@ class S7CommServer(Server):
 
             Server.__init__(self,config[LOGGING] == TRUE_KEYWORD)
 
-            self.printDebugInfo(config)
             self.initializeMemory()
-
-        def printDebugInfo(self,config):
-            print("Initialazing S7 COMM server")
-            print("Memory area size :",config[MEMORY_AREA_SIZE])
-            print("Server port :",config[PORT])
-            print("Debug mode :",(config[LOGGING] == TRUE_KEYWORD))
-
-
 
         def initializeMemory(self):
             DBdata = (types.wordlen_to_ctypes[types.S7WLByte] * self.size)()
@@ -60,8 +51,8 @@ class S7CommServer(Server):
                     logger.info(Server.event_text(self,event))
 
         def stop(self):
-            Server.destroy(self)
             self.isWorking = False
+            Server.destroy(self)
 
 
 if __name__ == "__main__":
