@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+    server:
+        build: ./server/
+        ports:
+        - 102:102
+        volumes:
+            - ./server/logs:/usr/local/var/log/suricata/
+        networks:
+            dev:
+                aliases:
+                - server.dev
+    client:
+        build: ./client/
+        networks:
+            dev:
+                aliases:
+                - client.dev
+        depends_on:
+        - server
+        networks:
+        - dev
+networks:
+  dev:
+    external:
+      name: dev
+

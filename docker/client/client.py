@@ -3,6 +3,7 @@ import configparser
 
 from snap7.client import Client
 from snap7 import types
+import socket
 
 
 MEMORY_AREA_SIZE = 'MemoryAreaSize'
@@ -18,7 +19,12 @@ TRUE_KEYWORD = 'True'
 class S7CommClient(Client):
         def __init__(self,config):
 
-            self.ip = config[IP_ADDRESS]
+            try:
+                self.ip=socket.gethostbyname(config[IP_ADDRESS])
+            except:
+                self.ip = config[IP_ADDRESS]
+
+            print("Connectiont to",self.ip)
             self.port = int(config[PORT])
             self.isWorking = True
 
@@ -28,7 +34,9 @@ class S7CommClient(Client):
         def start(self):
 
             Client.connect(self,self.ip,0,0,self.port)
-            Client.db_read(self,1, 0, 4)
+            while(True):
+                Client.db_read(self,1, 0, 4)
+                time.sleep(3)
 
 
         def stop(self):
