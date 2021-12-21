@@ -35,7 +35,9 @@ class S7CommClient(Client):
 
             Client.connect(self,self.ip,0,0,self.port)
             while(True):
-                Client.db_read(self,1, 0, 4)
+                data = Client.db_read(self,1, 0, 4)
+                Client.db_write(self,1, 0, data)
+                cpu_info = Client.get_cpu_info(self)
                 time.sleep(3)
 
 
